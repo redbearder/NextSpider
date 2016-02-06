@@ -416,37 +416,38 @@ if __name__=="__main__":
     #work_manager.wait_allcomplete()
     #work_manager.init_work_queue()
 
-    searchurl='http://www.gettyimages.cn/showlist.php?searchurl=az04NTgxJm09MSZpdGVtPTYwJng9MCZmPTEmbj0=&beginpage=1&mlt=undefined&ifmemcache=1&datatype=1&total=143739&perpage=60'
-    puresearchurl='http://www.gettyimages.cn/showlist.php'
     client = redis.Redis(host=setting.REDIS_SERVER, port=setting.REDIS_PORT, password=setting.REDIS_PW, db=0)
-    print setting.start_urls
-    #start Redis
-    html = gethtml(setting.start_urls)
+    taskurl = client.lpop(setting.REDIS_TASKQUEUE)
+    if taskurl == None:
+        searchurl='http://www.gettyimages.cn/showlist.php?searchurl=az04NTgxJm09MSZpdGVtPTYwJng9MCZmPTEmbj0=&beginpage=1&mlt=undefined&ifmemcache=1&datatype=1&total=143739&perpage=60'
+        puresearchurl='http://www.gettyimages.cn/showlist.php'
 
-    #start to crawl start url
-    #page = urllib2.urlopen('http://www.bing.com', timeout=10)
-    #data = page.read()
-    #print data
-    #print len(data)  #计算字节长度
+        print setting.start_urls
+        #start Redis
+        html = gethtml(setting.start_urls)
 
-    #print html
+        tree = etree.HTML(html)
+        nodes = tree.xpath('//a[contains(@href,"newsr.php?searchkey=")]/@href')
 
-    tree = etree.HTML(html)
-    nodes = tree.xpath('//a[contains(@href,"newsr.php?searchkey=")]/@href')
-    #print nodes
+        for node in nodes:
+            client.lpush(setting.REDIS_TASKQUEUE,node)
 
 
-    for node in nodes:
-        #push into redis crawler queue
-        print 'start to push Crawler Category queue ' + node
-        #print node
-        nodehtml = gethtml(node)
+    while True:
+        taskurl = client.lpop(setting.REDIS_TASKQUEUE)
+        if taskurl == None:
+            break
+        client.lpush(setting.REDIS_TASKQUEUE,taskurl)
+
+        print 'start to push Crawler Category queue ' + taskurl
+
+        nodehtml = gethtml(taskurl)
         level1tree = etree.HTML(nodehtml)
         level1nodes = level1tree.xpath('//div[@id="resultinfo"] //div[@id="totalpage"]/text()')
         CODEC='UTF-8'
         pageallnum = level1nodes[0].encode(CODEC)
         #print pageallnum
-        u = urlparse.urlparse(node)
+        u = urlparse.urlparse(taskurl)
         q = u.query
         qd = dict(urlparse.parse_qsl(q))
         searchkey = qd['searchkey']
@@ -461,10 +462,13 @@ if __name__=="__main__":
            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.111 Safari/537.36",
            "Referer": "http://www.gettyimages.cn/newsr.php?searchkey="+searchkey+"&local=true"
         }
-        for i in range(0, int(pageallnum) + 1):
-        #for i in range(0, 2):
-            #for i in range(1,4):
-                #print i
+
+        current = client.get(setting.REDIS_TASK_CURRENT)
+        if current == None:
+            current = 0
+        for i in range(current, int(pageallnum) + 1):
+                if i%setting.REDIS_TASKQUEUE_SAVEFREQUENCY == 0:
+                    client.set(setting.REDIS_TASK_CURRENT,i)
                 uu = urlparse.urlparse(searchurl)
                 qs = uu.query
                 pure_url = searchurl.replace('?'+qs, '')
@@ -475,21 +479,5 @@ if __name__=="__main__":
                 ret=puresearchurl + "?" + tmp_qs
                 #print ret
                 client.lpush(setting.REDIS_CRAWLERQUEUE_1,ret)
-        #client.lpush(setting.REDIS_COLLECTORQUEUE_1,node)
-        #nodehtml = gethtml(node)
-        #print nodehtml
-
-
-
-
-
-    #url = client.rpop(setting.REDIS_COLLECTORQUEUE_1)
-
-
-    '''
-    start = time.time()
-    work_manager =  CrawlWorkManager(setting.CRAWLER_NUM)#或者work_manager =  WorkManager(10000, 20)
-    work_manager.wait_allcomplete()
-    end = time.time()
-    print "cost all time: %s" % (end-start)
-    '''
+                if i == int(pageallnum):
+                    client.lpop(setting.REDIS_TASKQUEUE)

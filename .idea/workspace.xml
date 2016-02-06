@@ -30,17 +30,17 @@
         <entry file="file://$PROJECT_DIR$/setting.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="12" selection-end-column="22" />
+              <caret line="19" column="38" selection-start-line="19" selection-start-column="38" selection-end-line="19" selection-end-column="38" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="startMaster.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="startMaster.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/startMaster.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="378" column="0" selection-start-line="378" selection-start-column="0" selection-end-line="389" selection-end-column="20" />
+            <state vertical-scroll-proportion="0.79706275">
+              <caret line="481" column="39" selection-start-line="481" selection-start-column="39" selection-end-line="481" selection-end-column="39" />
               <folding>
                 <element signature="e#54#69#0" expanded="true" />
               </folding>
@@ -48,10 +48,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="startSlave.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="startSlave.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/startSlave.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.9238985">
+            <state vertical-scroll-proportion="0.0">
               <caret line="392" column="20" selection-start-line="392" selection-start-column="20" selection-end-line="392" selection-end-column="20" />
               <folding>
                 <element signature="e#54#69#0" expanded="true" />
@@ -108,10 +108,10 @@
         <option value="$PROJECT_DIR$/spider/collector/__init__.py" />
         <option value="$PROJECT_DIR$/spider/crawler/__init__.py" />
         <option value="$PROJECT_DIR$/startTest.py" />
-        <option value="$PROJECT_DIR$/setting.py" />
         <option value="$PROJECT_DIR$/runSlave.bat" />
-        <option value="$PROJECT_DIR$/startMaster.py" />
         <option value="$PROJECT_DIR$/startSlave.py" />
+        <option value="$PROJECT_DIR$/setting.py" />
+        <option value="$PROJECT_DIR$/startMaster.py" />
       </list>
     </option>
   </component>
@@ -929,28 +929,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/setting.py">
+    <entry file="file://$PROJECT_DIR$/startSlave.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="12" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/startMaster.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="378" column="0" selection-start-line="378" selection-start-column="0" selection-end-line="389" selection-end-column="20" />
+          <caret line="392" column="20" selection-start-line="392" selection-start-column="20" selection-end-line="392" selection-end-column="20" />
           <folding>
             <element signature="e#54#69#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/startSlave.py">
+    <entry file="file://$PROJECT_DIR$/setting.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9238985">
-          <caret line="392" column="20" selection-start-line="392" selection-start-column="20" selection-end-line="392" selection-end-column="20" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="19" column="38" selection-start-line="19" selection-start-column="38" selection-end-line="19" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/startMaster.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.79706275">
+          <caret line="481" column="39" selection-start-line="481" selection-start-column="39" selection-end-line="481" selection-end-column="39" />
           <folding>
             <element signature="e#54#69#0" expanded="true" />
           </folding>
