@@ -308,7 +308,7 @@ class addCollectJob(threading.Thread):
         keywordvar = keywordvar
         #print keywordvar
         #yield viewitem
-        '''
+
         image_detail = {
                 'imageid':imageid,
                 'imgtitle':imgtitle,
@@ -317,10 +317,7 @@ class addCollectJob(threading.Thread):
                 'imgurl':imgurl,
                 'keywordvar':keywordvar,
             }
-        '''
-        image_detail = {
-                'imageid':imageid
-            }
+
         while(True):
             try:
                 #self.client = redis.Redis(host=self.REDIS_SERVER, port=self.REDIS_PORT, password=self.REDIS_PW, db=0)
@@ -379,6 +376,19 @@ def gethtml(url):
 
             return  result
             break
+        except requests.exceptions.Timeout:
+            # Maybe set up for a retry, or continue in a retry loop
+            print e
+            continue
+        except requests.exceptions.TooManyRedirects:
+            # Tell the user their URL was bad and try a different one
+            print e
+            continue
+        except requests.exceptions.RequestException as e:
+            # catastrophic error. bail.
+            print e
+            continue
+            #sys.exit(1)
         except URLError, e:
             '''
             if hasattr(e, 'reason'):
@@ -444,7 +454,7 @@ if __name__=="__main__":
         searchurlbase64=base64.b64encode(orasearchurl)
         headers = {
            "Accept": "*/*",
-            "Accept-Encoding": "gzip,deflate",
+          "Accept-Encoding": "gzip,deflate",
            "Accept-Language": "en-US,en;q=0.8,zh-TW;q=0.6,zh;q=0.4",
            "Connection": "keep-alive",
            "Content-Type":" application/x-www-form-urlencoded; charset=UTF-8",

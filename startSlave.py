@@ -379,6 +379,18 @@ def gethtml(url):
 
             return  result
             break
+        except requests.exceptions.Timeout:
+            # Maybe set up for a retry, or continue in a retry loop
+            print e
+            continue
+        except requests.exceptions.TooManyRedirects:
+            # Tell the user their URL was bad and try a different one
+            print e
+            continue
+        except requests.exceptions.RequestException as e:
+            # catastrophic error. bail.
+            print e
+            continue
         except URLError, e:
             '''
             if hasattr(e, 'reason'):
