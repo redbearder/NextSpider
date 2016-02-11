@@ -157,7 +157,7 @@ class CrawlWork(threading.Thread):
                 do(args)
                 self.work_queue.task_done()#通知系统任务完成
             except Exception, e:
-                print e
+                #print e
                 #break
                 if do != '' and args != '' :
                     self.work_queue.put((do, list(args)))
@@ -239,7 +239,7 @@ class CollectWork(threading.Thread):
                 do(args)
                 self.work_queue.task_done()#通知系统任务完成
             except Exception, e:
-                print e
+                #print e
                 #break
                 if do != '' and args != '' :
                     self.work_queue.put((do, list(args)))
@@ -418,10 +418,10 @@ if __name__=="__main__":
 
     client = redis.Redis(host=setting.REDIS_SERVER, port=setting.REDIS_PORT, password=setting.REDIS_PW, db=0)
     taskurl = client.lpop(setting.REDIS_TASKQUEUE)
-    if taskurl == None:
-        searchurl='http://www.gettyimages.cn/showlist.php?searchurl=az04NTgxJm09MSZpdGVtPTYwJng9MCZmPTEmbj0=&beginpage=1&mlt=undefined&ifmemcache=1&datatype=1&total=143739&perpage=60'
-        puresearchurl='http://www.gettyimages.cn/showlist.php'
+    searchurl='http://www.gettyimages.cn/showlist.php?searchurl=az04NTgxJm09MSZpdGVtPTYwJng9MCZmPTEmbj0=&beginpage=1&mlt=undefined&ifmemcache=1&datatype=1&total=143739&perpage=60'
+    puresearchurl='http://www.gettyimages.cn/showlist.php'
 
+    if taskurl == None:
         print setting.start_urls
         #start Redis
         html = gethtml(setting.start_urls)
@@ -466,7 +466,7 @@ if __name__=="__main__":
         current = client.get(setting.REDIS_TASK_CURRENT)
         if current == None:
             current = 0
-        for i in range(current, int(pageallnum) + 1):
+        for i in range(int(current), int(pageallnum) + 1):
                 if i%setting.REDIS_TASKQUEUE_SAVEFREQUENCY == 0:
                     client.set(setting.REDIS_TASK_CURRENT,i)
                 uu = urlparse.urlparse(searchurl)
