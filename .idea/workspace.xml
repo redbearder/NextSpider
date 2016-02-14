@@ -14,7 +14,8 @@
   </component>
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/SimpleSpider$startMaster.coverage" NAME="startMaster Coverage Results" MODIFIED="1455207826714" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/SimpleSpider$startMaster.coverage" NAME="startMaster Coverage Results" MODIFIED="1455464817750" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/SimpleSpider$startSlave.coverage" NAME="startSlave Coverage Results" MODIFIED="1455466051101" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/SimpleSpider$startTest.coverage" NAME="startTest Coverage Results" MODIFIED="1454431539589" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="CreatePatchCommitExecutor">
@@ -30,7 +31,7 @@
         <entry file="file://$PROJECT_DIR$/setting.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="9" column="16" selection-start-line="9" selection-start-column="16" selection-end-line="9" selection-end-column="16" />
+              <caret line="22" column="16" selection-start-line="22" selection-start-column="16" selection-end-line="22" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -39,10 +40,14 @@
       <file leaf-file-name="startMaster.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/startMaster.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.3333335">
-              <caret line="414" column="4" selection-start-line="414" selection-start-column="4" selection-end-line="414" selection-end-column="4" />
+            <state vertical-scroll-proportion="-28.8">
+              <caret line="666" column="4" selection-start-line="666" selection-start-column="4" selection-end-line="671" selection-end-column="34" />
               <folding>
                 <element signature="e#54#69#0" expanded="true" />
+                <marker date="1455464956235" expanded="true" signature="10697:10709" placeholder="insert into ..." />
+                <marker date="1455464956235" expanded="true" signature="10697:10798" placeholder="insert into ..." />
+                <marker date="1455464956235" expanded="true" signature="18713:18744" placeholder="select * fro..htmls..." />
+                <marker date="1455464956235" expanded="true" signature="22377:22885" placeholder="CREATE TABLE..IF..." />
               </folding>
             </state>
           </provider>
@@ -51,10 +56,11 @@
       <file leaf-file-name="startSlave.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/startSlave.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3852573">
-              <caret line="241" column="17" selection-start-line="241" selection-start-column="17" selection-end-line="241" selection-end-column="17" />
+            <state vertical-scroll-proportion="24.149532">
+              <caret line="465" column="26" selection-start-line="465" selection-start-column="26" selection-end-line="465" selection-end-column="26" />
               <folding>
                 <element signature="e#54#69#0" expanded="true" />
+                <marker date="1455465934527" expanded="true" signature="4335:4436" placeholder="insert into ..." />
               </folding>
             </state>
           </provider>
@@ -127,6 +133,25 @@
     <option name="y" value="-8" />
     <option name="width" value="1616" />
     <option name="height" value="886" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+          <State>
+            <id>Python</id>
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>PyArgumentListInspection</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -221,8 +246,8 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
       <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -237,7 +262,7 @@
       <recent name="C:\Users\Administrator\PycharmProjects\SimpleSpider\spider" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.startMaster">
+  <component name="RunManager" selected="Python.startSlave">
     <configuration default="false" name="startMaster" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -270,6 +295,24 @@
       <module name="SimpleSpider" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/startTest.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="startSlave" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="SimpleSpider" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/startSlave.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -462,14 +505,16 @@
       <option name="USE_KEYWORD" value="false" />
       <method />
     </configuration>
-    <list size="2">
+    <list size="3">
       <item index="0" class="java.lang.String" itemvalue="Python.startMaster" />
       <item index="1" class="java.lang.String" itemvalue="Python.startTest" />
+      <item index="2" class="java.lang.String" itemvalue="Python.startSlave" />
     </list>
     <recent_temporary>
-      <list size="2">
-        <item index="0" class="java.lang.String" itemvalue="Python.startMaster" />
-        <item index="1" class="java.lang.String" itemvalue="Python.startTest" />
+      <list size="3">
+        <item index="0" class="java.lang.String" itemvalue="Python.startSlave" />
+        <item index="1" class="java.lang.String" itemvalue="Python.startMaster" />
+        <item index="2" class="java.lang.String" itemvalue="Python.startTest" />
       </list>
     </recent_temporary>
   </component>
@@ -497,7 +542,7 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27892032" sideWeight="0.4975" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5501285" sideWeight="0.4975" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -527,7 +572,7 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="19" />
+      <option name="time" value="54" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -554,48 +599,10 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#54#69#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spider/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spider/collector/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spider/crawler/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/setting.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/startMaster.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#54#69#0" expanded="true" />
+            <marker date="1455464956235" expanded="true" signature="10697:10709" placeholder="insert into ..." />
+            <marker date="1455464956235" expanded="true" signature="10697:10798" placeholder="insert into ..." />
+            <marker date="1455464956235" expanded="true" signature="18713:18744" placeholder="select * fro..htmls..." />
+            <marker date="1455464956235" expanded="true" signature="22377:22885" placeholder="CREATE TABLE..IF..." />
           </folding>
         </state>
       </provider>
@@ -638,6 +645,10 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#54#69#0" expanded="true" />
+            <marker date="1455464956235" expanded="true" signature="10697:10709" placeholder="insert into ..." />
+            <marker date="1455464956235" expanded="true" signature="10697:10798" placeholder="insert into ..." />
+            <marker date="1455464956235" expanded="true" signature="18713:18744" placeholder="select * fro..htmls..." />
+            <marker date="1455464956235" expanded="true" signature="22377:22885" placeholder="CREATE TABLE..IF..." />
           </folding>
         </state>
       </provider>
@@ -680,6 +691,10 @@
           <caret line="56" column="24" selection-start-line="56" selection-start-column="17" selection-end-line="56" selection-end-column="24" />
           <folding>
             <element signature="e#54#69#0" expanded="true" />
+            <marker date="1455464956235" expanded="true" signature="10697:10709" placeholder="insert into ..." />
+            <marker date="1455464956235" expanded="true" signature="10697:10798" placeholder="insert into ..." />
+            <marker date="1455464956235" expanded="true" signature="18713:18744" placeholder="select * fro..htmls..." />
+            <marker date="1455464956235" expanded="true" signature="22377:22885" placeholder="CREATE TABLE..IF..." />
           </folding>
         </state>
       </provider>
@@ -722,6 +737,10 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#54#69#0" expanded="true" />
+            <marker date="1455464956235" expanded="true" signature="10697:10709" placeholder="insert into ..." />
+            <marker date="1455464956235" expanded="true" signature="10697:10798" placeholder="insert into ..." />
+            <marker date="1455464956235" expanded="true" signature="18713:18744" placeholder="select * fro..htmls..." />
+            <marker date="1455464956235" expanded="true" signature="22377:22885" placeholder="CREATE TABLE..IF..." />
           </folding>
         </state>
       </provider>
@@ -764,6 +783,10 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#54#69#0" expanded="true" />
+            <marker date="1455464956235" expanded="true" signature="10697:10709" placeholder="insert into ..." />
+            <marker date="1455464956235" expanded="true" signature="10697:10798" placeholder="insert into ..." />
+            <marker date="1455464956235" expanded="true" signature="18713:18744" placeholder="select * fro..htmls..." />
+            <marker date="1455464956235" expanded="true" signature="22377:22885" placeholder="CREATE TABLE..IF..." />
           </folding>
         </state>
       </provider>
@@ -806,6 +829,10 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#54#69#0" expanded="true" />
+            <marker date="1455464956235" expanded="true" signature="10697:10709" placeholder="insert into ..." />
+            <marker date="1455464956235" expanded="true" signature="10697:10798" placeholder="insert into ..." />
+            <marker date="1455464956235" expanded="true" signature="18713:18744" placeholder="select * fro..htmls..." />
+            <marker date="1455464956235" expanded="true" signature="22377:22885" placeholder="CREATE TABLE..IF..." />
           </folding>
         </state>
       </provider>
@@ -848,6 +875,10 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#54#69#0" expanded="true" />
+            <marker date="1455464956235" expanded="true" signature="10697:10709" placeholder="insert into ..." />
+            <marker date="1455464956235" expanded="true" signature="10697:10798" placeholder="insert into ..." />
+            <marker date="1455464956235" expanded="true" signature="18713:18744" placeholder="select * fro..htmls..." />
+            <marker date="1455464956235" expanded="true" signature="22377:22885" placeholder="CREATE TABLE..IF..." />
           </folding>
         </state>
       </provider>
@@ -932,27 +963,72 @@
     <entry file="file://$PROJECT_DIR$/setting.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="16" selection-start-line="9" selection-start-column="16" selection-end-line="9" selection-end-column="16" />
+          <caret line="22" column="16" selection-start-line="22" selection-start-column="16" selection-end-line="22" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Python27/Lib/ntpath.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334">
+          <caret line="114" column="0" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharm40/system/python_stubs/-762174762/thread.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33244327">
+          <caret line="110" column="4" selection-start-line="110" selection-start-column="4" selection-end-line="110" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Python27/Lib/site-packages/gevent/server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334">
+          <caret line="18" column="6" selection-start-line="18" selection-start-column="6" selection-end-line="18" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Python27/Lib/site-packages/gevent/baseserver.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.3173516">
+          <caret line="133" column="8" selection-start-line="133" selection-start-column="8" selection-end-line="133" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Python27/Lib/site-packages/gevent/pywsgi.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.18721461">
+          <caret line="590" column="21" selection-start-line="590" selection-start-column="21" selection-end-line="590" selection-end-column="21" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/startMaster.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.3333335">
-          <caret line="414" column="4" selection-start-line="414" selection-start-column="4" selection-end-line="414" selection-end-column="4" />
+        <state vertical-scroll-proportion="-28.8">
+          <caret line="666" column="4" selection-start-line="666" selection-start-column="4" selection-end-line="671" selection-end-column="34" />
           <folding>
             <element signature="e#54#69#0" expanded="true" />
+            <marker date="1455464956235" expanded="true" signature="10697:10709" placeholder="insert into ..." />
+            <marker date="1455464956235" expanded="true" signature="10697:10798" placeholder="insert into ..." />
+            <marker date="1455464956235" expanded="true" signature="18713:18744" placeholder="select * fro..htmls..." />
+            <marker date="1455464956235" expanded="true" signature="22377:22885" placeholder="CREATE TABLE..IF..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/startSlave.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3852573">
-          <caret line="241" column="17" selection-start-line="241" selection-start-column="17" selection-end-line="241" selection-end-column="17" />
+        <state vertical-scroll-proportion="24.149532">
+          <caret line="465" column="26" selection-start-line="465" selection-start-column="26" selection-end-line="465" selection-end-column="26" />
           <folding>
             <element signature="e#54#69#0" expanded="true" />
+            <marker date="1455465934527" expanded="true" signature="4335:4436" placeholder="insert into ..." />
           </folding>
         </state>
       </provider>

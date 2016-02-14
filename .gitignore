@@ -48,3 +48,5 @@ Temporary Items
 /spider/collector/*.pyc
 /redisbin_x32/dump.rdb
 /redisbin_x32/*.rdb
+/.idea
+/*.pyc

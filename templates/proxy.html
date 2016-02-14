@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Proxy</title>
+
+        <link href="{{url_for('static', filename='bootstrap.min.css')}}" rel="stylesheet" />
+        <link href="{{url_for('static', filename='style.css')}}" rel="stylesheet" />
+    </head>
+
+    <body>
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="brand" href="#">Proxy</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <!-- Connection form -->
+
+            <form id="addproxy" class="form-horizontal" method="GET">
+                <fieldset>
+                    <legend>Add Proxy</legend>
+
+
+                    <div class="control-group">
+                        <label class="control-label">
+                            Protocol
+                        </label>
+
+                        <div class="controls">
+                            <label class="radio">
+                                <input type="radio" name="proxyprotocol" id="proxyprotocol"
+                                    value="http" checked />
+                                    http
+                            </label>
+
+                        </div>
+                    </div>
+
+                    <div class="control-group" id="password_authentication">
+                        <label class="control-label">
+                            IP
+                        </label>
+                        <div class="controls">
+                            <input type="text" id="proxyip" name="proxyip"
+                                class="input-large" />
+                        </div>
+                    </div>
+					
+					<div class="control-group" id="password_authentication">
+                        <label class="control-label">
+                            Port
+                        </label>
+                        <div class="controls">
+                            <input type="text" id="proxyport" name="proxyport"
+                                class="input-large" />
+                        </div>
+                    </div>
+
+                    
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-primary" onclick="addproxy()">
+                            Add
+                        </button>
+                    </div>
+
+                </fieldset>
+            </form>
+
+            <div id="result">
+			{% for i in range(0, num) %}
+				{{proxylist[i]}}<a href="/delproxy/{{i}}">delete this proxy</a><br/>
+			{% endfor %}
+            </div>
+
+        </div>
+
+<script type="application/javascript">
+            function addproxy() {
+                var protocol = document.getElementById("proxyprotocol");
+                var proxyip = document.getElementById("proxyip");
+                var proxyport = document.getElementById("proxyport");
+				location.href = '/addproxy/'+protocol.value+'/'+proxyip.value+'/'+proxyport.value; 
+            }
+</script>
+
+
+
+    </body>
+</html>

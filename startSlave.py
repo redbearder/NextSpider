@@ -21,6 +21,10 @@ import threading
 import time
 import thread
 
+if setting.DUPLICATE_SOURCE == 'MYSQL':
+    import MySQLdb
+    import MySQLdb.cursors
+
 class CrawlWorkManager(object):
     def __init__(self, thread_num=10):
         self.work_queue = Queue.Queue()
@@ -85,6 +89,10 @@ class addCrawlJob(threading.Thread):
         threading.Thread.__init__(self)
         self.work_queue = work_queue
         self.redisclient = redisclient
+        if setting.DUPLICATE_SOURCE == 'MYSQL':
+            self.mysqlclient = MySQLdb.connect(host=setting.MYSQL_SERVER, port=setting.MYSQL_PORT,
+                                               user=setting.MYSQL_USER, passwd=setting.MYSQL_PW,
+                                               charset=setting.MYSQL_CHARSET, db=setting.MYSQL_DB)
         self.start()
 
     def addOneMoreJob(self):
@@ -123,10 +131,17 @@ class addCrawlJob(threading.Thread):
                     #yield scrapy.Request(url, callback=self.parse_detail)
                     while(True):
                         try:
-                            #self.client = redis.Redis(host=setting.REDIS_SERVER, port=setting.REDIS_PORT, password=setting.REDIS_PW, db=0)
-                            result=self.redisclient.lpush(setting.REDIS_COLLECTORQUEUE_1,url)
-                            #print 'Crawl one collector page and success push '+url
-                            #return item
+                            if setting.DUPLICATE_SOURCE == 'MYSQL':
+                                cursor = self.mysqlclient.cursor()
+                                sql = "insert into " + setting.DUPLICATE_FIELD + "(`" + setting.DUPLICATE_FIELD + "`) values ('" + url + "')"
+                                cursor.execute(sql)
+                                cursor.close()
+                                result = self.redisclient.lpush(setting.REDIS_COLLECTORQUEUE_1, url)
+                            else:
+                                saddreturn = self.redisclient.sadd(setting.DUPLICATE_FIELD, url)
+                                if saddreturn == 1:
+                                    result = self.redisclient.lpush(setting.REDIS_COLLECTORQUEUE_1, url)
+                            print 'Crawl one collector page and success push ' + url
                             break
                         except Exception, e:
                             print e
@@ -373,13 +388,20 @@ def gethtml(url):
                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.111 Safari/537.36",
                "Referer": "http://www.gettyimages.cn/newsr.php?searchkey=8227&local=true"
             }
-            response = requests.get(url,headers=headers)
-            response.encoding='gbk'
-            #result = response.headers['content-encoding']
+
+            if proxylist == []:
+                response = requests.get(url, headers=headers)
+            else:
+                proxy = random.choice(proxylist)
+                proxies = {
+                    "http": proxy,
+                    "https": proxy,
+                }
+                response = requests.get(url, headers=headers, proxies=proxies)
+            # response = requests.get(url,headers=headers)
+            response.encoding = setting.RESPONSE_ENCODING
+            # result = response.headers['content-encoding']
             result = response.text
-            # insert into the html_cache.db
-            #curs.execute("insert into htmls values(?,?,?);", (url,serialize(result),len(result)))
-            #conn.commit()
 
             print "get Page Html successful " + url
 
@@ -392,9 +414,12 @@ def gethtml(url):
         except requests.exceptions.TooManyRedirects:
             # Tell the user their URL was bad and try a different one
             print e
-            continue
+            break
         except requests.exceptions.RequestException as e:
             # catastrophic error. bail.
+            proxylist.remove(proxy)
+            client = redis.Redis(host=setting.REDIS_SERVER, port=setting.REDIS_PORT, password=setting.REDIS_PW, db=0)
+            redisproxylist = client.set("PROXYLIST",proxylist)
             print e
             continue
         except URLError, e:
@@ -407,7 +432,11 @@ def gethtml(url):
                 print 'The server couldn not fulfill the request'
                 print 'Reason: ', e.reason
             '''
-            continue
+            print e
+            break
+        except Exception, e:
+            print e
+            break
 
 def pushTaskQueue(taskobject, taskurl):
     print 'pushCrawlerQueue'
@@ -419,7 +448,20 @@ def pushCollectorQueue(url):
     print 'pushCollectorQueue'
 
 if __name__=="__main__":
+    global proxylist
+    proxylist = []
+    client = redis.Redis(host=setting.REDIS_SERVER, port=setting.REDIS_PORT, password=setting.REDIS_PW, db=0)
+    redisproxylist = client.get("PROXYLIST")
+    if redisproxylist != None:
+        proxylist = redisproxylist
     work_manager =  CrawlWorkManager(setting.SLAVE_CRAWLER_NUM)#或者work_manager =  WorkManager(10000, 20)
     collect_work_manager =  CollectWorkManager(setting.SLAVE_COLLECTOR_NUM)#或者work_manager =  WorkManager(10000, 20)
-    #work_manager.wait_allcomplete()
-    #work_manager.init_work_queue()
+
+    while True:
+        time.sleep(10)
+        redisproxylist = client.get("PROXYLIST")
+        if redisproxylist != None:
+            proxylist = redisproxylist
+        else:
+            proxylist = []
+
