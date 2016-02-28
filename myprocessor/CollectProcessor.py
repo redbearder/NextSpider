@@ -7,37 +7,18 @@ def CollectProcessor(collectPageUrl, redisclient, mysqlclient = None):
         try:
             html = gethtml(collectPageUrl)
             tree = etree.HTML(html)
-            nodes = tree.xpath('//div[@class="search"] //ul[@class="clearfix"]')
+            keywordnodes = tree.xpath("id('ulKeylistCN')/ul/dl/dd/span/li/label/text()")
 
             keywordvar = ''
-            keyword1var = ''
-            keyword2var = ''
-            keyword3var = ''
-            keyword4var = ''
-            keyword5var = ''
-            i = 1
-            # for each in response.doc('div[class="search"] ul[class="clearfix"]').items():
-            for each in nodes:
-                for each1 in each.xpath('li //label //a/text()'):
-                    if i == 1:
-                        keyword1var += each1 + ','
-                    if i == 2:
-                        keyword2var += each1 + ','
-                    if i == 3:
-                        keyword3var += each1 + ','
-                    if i == 4:
-                        keyword4var += each1 + ','
-                    if i == 5:
-                        keyword5var += each1 + ','
-                i = i + 1
+            for each in keywordnodes:
+                keywordvar += each + ','
 
-            keywordvar = keyword1var + keyword2var + keyword3var + keyword4var + keyword5var
-
-            imageid = tree.xpath('//ul[@class="msg"]/li/span/text()')[1]
-            imgtitle = tree.xpath('//ul[@class="msg"]/li/span/text()')[0]
-            imagetype = tree.xpath('//ul[@class="msg"]/li/span/text()')[2]
+            #imageid = tree.xpath("id('divPicinfo')/div/table/tbody/tr[6]/td[2]/text()")
+            imageid = tree.xpath("id('divPicinfo')/div/table/tr[6]/td[2]/text()")[0].strip()
+            imgtitle = tree.xpath("id('divPicinfo')/div/table/tr[1]/td[2]/text()")[0]
+            imagetype = tree.xpath("id('divPicinfo')/div/table/tr[8]/td[2]/text()")[0]
             weburl = collectPageUrl
-            imgurl = tree.xpath('//div[@class="picmsg"] //p[@class="pic"] //img//@src')[0]
+            imgurl = tree.xpath("id('form1')/div[2]/div[3]/div[1]/img/@src")[0]
             keywordvar = keywordvar
             # print keywordvar
             # yield viewitem

@@ -8,7 +8,7 @@ def CrawlProcessor(collectPageUrl, redisclient, mysqlclient = None):
         try:
             html = gethtml(collectPageUrl)
             tree = etree.HTML(html)
-            nodes = tree.xpath('//a/@href')
+            nodes = tree.xpath("id('ulImgHolder')/li/span[1]/a/@href")
         except Exception, e:
             return
         last = ''
@@ -18,7 +18,7 @@ def CrawlProcessor(collectPageUrl, redisclient, mysqlclient = None):
                 # print each
                 last = each
                 # print last
-                url = 'http://www.gettyimages.cn' + each
+                url = 'http://www.quanjing.com' + each
                 # yield scrapy.Request(url, callback=self.parse_detail)
                 while (True):
                     try:

@@ -53,4 +53,4 @@ def gethtml(url):
             break
         except Exception, e:
             print e
-            break
+            raise e

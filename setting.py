@@ -19,18 +19,18 @@ MYSQL_CHARSET='utf8'
 MYSQL_DB='iso100'
 
 DUPLICATE_SOURCE='MYSQL' #REDIS or MYSQL
-DUPLICATE_FIELD='imageurl1'
+DUPLICATE_FIELD='imageurlquanjing'
 
-RESPONSE_ENCODING='gbk'
+RESPONSE_ENCODING='UTF-8'
 
 CRAWLER_NUM=1
-COLLECTOR_NUM=3
+COLLECTOR_NUM=1
 
 SLAVE_CRAWLER_NUM=15
 SLAVE_COLLECTOR_NUM=40
 
-DOWNLOADER_NUM=30
-SLAVE_DOWNLOADER_NUM=30
+DOWNLOADER_NUM=0
+SLAVE_DOWNLOADER_NUM=0
 
 REDIS_PAGEQUEUE_1='pagequeue1'
 REDIS_PAGEQUEUE_2='pagequeue2'
@@ -52,7 +52,7 @@ REDIS_DOWNLOADQUEUE_1='REDIS_DOWNLOADQUEUE_1'
 REDIS_DOWNLOADQUEUE_2='REDIS_DOWNLOADQUEUE_2'
 
 #start_urls=('http://url1','http://url1')
-start_urls='http://www.gettyimages.cn/page/icindex.html'
+start_urls='http://www.quanjing.com/about/Map.aspx'
 
 REQUEST_HEADER = {
                 "Accept": "*/*",
