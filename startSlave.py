@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import setting
-from spider.collector import CollectWorkManager
-from spider.crawler import CrawlWorkManager
+from spider.collector.CollectWorkManager import CollectWorkManager
+from spider.crawler.CrawlWorkManager import CrawlWorkManager
 try:
     import cPickle as pickle
 except ImportError:

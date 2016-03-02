@@ -1,5 +1,5 @@
 @echo off
 rem cmd
 rem echo 当前目录是：%cd%
-python startMaster.py
+cmd /k python startMaster.py
 pause

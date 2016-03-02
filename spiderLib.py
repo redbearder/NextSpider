@@ -40,11 +40,11 @@ def gethtml(url):
             print e
             break
         except requests.exceptions.RequestException as e:
-            # catastrophic error. bail.
             #del invalid proxy
-            proxylist.remove(proxy)
-            client = redis.Redis(host=setting.REDIS_SERVER, port=setting.REDIS_PORT, password=setting.REDIS_PW, db=0)
-            redisproxylist = client.set("PROXYLIST",proxylist)
+            if proxy != '':
+                proxylist.remove(proxy)
+                client = redis.Redis(host=setting.REDIS_SERVER, port=setting.REDIS_PORT, password=setting.REDIS_PW, db=0)
+                redisproxylist = client.set("PROXYLIST",proxylist)
             print e
             continue
             # sys.exit(1)
