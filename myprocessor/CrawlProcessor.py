@@ -8,9 +8,10 @@ def CrawlProcessor(collectPageUrl, redisclient, mysqlclient = None):
         try:
             html = gethtml(collectPageUrl)
             tree = etree.HTML(html)
-            nodes = tree.xpath("id('ulImgHolder')/li/span[1]/a/@href")
+            nodes = tree.xpath("id('wrapper')/div[2]/div[3]/div/div/div/div/div/div/a/@href")
         except Exception, e:
-            return
+            print e
+            raise e
         last = ''
         for each in nodes:
             # if re.match("http://www.gettyimages.cn/\d+", each, re.U):
@@ -18,7 +19,7 @@ def CrawlProcessor(collectPageUrl, redisclient, mysqlclient = None):
                 # print each
                 last = each
                 # print last
-                url = 'http://www.quanjing.com' + each
+                url = each
                 # yield scrapy.Request(url, callback=self.parse_detail)
                 while (True):
                     try:
@@ -28,15 +29,18 @@ def CrawlProcessor(collectPageUrl, redisclient, mysqlclient = None):
                             cursor.execute(sql)
                             cursor.close()
                             result = redisclient.lpush(setting.REDIS_COLLECTORQUEUE_1, url)
+                            print 'Crawl one collector page and success push ' + url
                         else:
                             saddreturn = redisclient.sadd(setting.DUPLICATE_FIELD, url)
                             if saddreturn == 1:
                                 result = redisclient.lpush(setting.REDIS_COLLECTORQUEUE_1, url)
+                                print 'Crawl one collector page and success push ' + url
+                            else:
+                                print 'Crawl one collector page and fail push '+url+' and break'
 
-                        print 'Crawl one collector page and success push ' + url
                         # return item
                         break
                     except Exception, e:
                         print e
                         print 'Crawl one collector page and fail push '+url+' and break'
-                        break
+                        raise e

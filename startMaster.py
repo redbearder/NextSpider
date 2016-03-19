@@ -40,7 +40,7 @@ if __name__ == "__main__":
     client = redis.Redis(host=setting.REDIS_SERVER, port=setting.REDIS_PORT, password=setting.REDIS_PW, db=0)
     redisproxylist = client.get("PROXYLIST")
     if redisproxylist != None:
-        proxylist = redisproxylist
+        setting.GlobalVar.set_proxylist(redisproxylist)
 
     if setting.DUPLICATE_SOURCE == 'MYSQL':
         mysqlclient = MySQLdb.connect(host=setting.MYSQL_SERVER, port=setting.MYSQL_PORT, user=setting.MYSQL_USER,

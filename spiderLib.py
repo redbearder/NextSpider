@@ -5,18 +5,23 @@ from setting import *
 import requests
 import random
 from urllib2 import URLError, HTTPError
+import time
 
 def gethtml(url):
     '''''Fetch the target html'''
+    retrytimes=0
     while True:
+        retrytimes+=1
+        if retrytimes > setting.REQUEST_RETRY_TIMES:
+            raise 'Too Many Retry Times and Give up'
         proxy = ''
         try:
             headers = setting.REQUEST_HEADER
 
-            if proxylist == []:
+            if setting.GlobalVar.get_proxylist() == []:
                 response = requests.get(url, headers=headers)
             else:
-                proxy = random.choice(proxylist)
+                proxy = random.choice(setting.GlobalVar.get_proxylist())
                 proxies = {
                     "http": proxy,
                     "https": proxy,
@@ -34,23 +39,25 @@ def gethtml(url):
         except requests.exceptions.Timeout:
             # Maybe set up for a retry, or continue in a retry loop
             print e
+            time.sleep(setting.REQUEST_RETRY_INTERVAL)
             continue
         except requests.exceptions.TooManyRedirects:
             # Tell the user their URL was bad and try a different one
             print e
-            break
+            raise e
         except requests.exceptions.RequestException as e:
             #del invalid proxy
             if proxy != '':
-                proxylist.remove(proxy)
+                setting.GlobalVar.get_proxylist().remove(proxy)
                 client = redis.Redis(host=setting.REDIS_SERVER, port=setting.REDIS_PORT, password=setting.REDIS_PW, db=0)
-                redisproxylist = client.set("PROXYLIST",proxylist)
+                redisproxylist = client.set("PROXYLIST",setting.GlobalVar.get_proxylist())
             print e
+            time.sleep(setting.REQUEST_RETRY_INTERVAL)
             continue
             # sys.exit(1)
         except URLError, e:
             print e
-            break
+            raise e
         except Exception, e:
             print e
             raise e

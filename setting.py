@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
-
-global proxylist
-proxylist = []
+import globalVar as GlobalVar
 
 #web
 WEB_PORT = 3333
+
 #REDIS
 REDIS_SERVER = "127.0.0.1"
 REDIS_PORT = 6379
@@ -18,19 +17,22 @@ MYSQL_PW='root'
 MYSQL_CHARSET='utf8'
 MYSQL_DB='iso100'
 
-DUPLICATE_SOURCE='MYSQL' #REDIS or MYSQL
-DUPLICATE_FIELD='imageurlquanjing'
+DUPLICATE_SOURCE='REDIS' #REDIS or MYSQL
+DUPLICATE_FIELD='imageurl123rf'
 
 RESPONSE_ENCODING='UTF-8'
 
-CRAWLER_NUM=1
-COLLECTOR_NUM=1
+CRAWLER_NUM=3
+COLLECTOR_NUM=6
 
 SLAVE_CRAWLER_NUM=15
 SLAVE_COLLECTOR_NUM=40
 
 DOWNLOADER_NUM=0
 SLAVE_DOWNLOADER_NUM=0
+
+REQUEST_RETRY_TIMES=10
+REQUEST_RETRY_INTERVAL=10 #unit is second
 
 REDIS_PAGEQUEUE_1='pagequeue1'
 REDIS_PAGEQUEUE_2='pagequeue2'
@@ -52,7 +54,7 @@ REDIS_DOWNLOADQUEUE_1='REDIS_DOWNLOADQUEUE_1'
 REDIS_DOWNLOADQUEUE_2='REDIS_DOWNLOADQUEUE_2'
 
 #start_urls=('http://url1','http://url1')
-start_urls='http://www.quanjing.com/about/Map.aspx'
+start_urls='http://www.123rf.com.cn/%E5%85%8D%E7%89%88%E7%A8%8E%E5%9B%BE%E7%89%87/'
 
 REQUEST_HEADER = {
                 "Accept": "*/*",

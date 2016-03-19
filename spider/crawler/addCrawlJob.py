@@ -2,6 +2,7 @@
 import threading
 import setting
 from myprocessor import CrawlProcessor
+import sys
 
 if setting.DUPLICATE_SOURCE == 'MYSQL':
     import MySQLdb
@@ -12,6 +13,7 @@ class addCrawlJob(threading.Thread):
         threading.Thread.__init__(self)
         self.work_queue = work_queue
         self.redisclient = redisclient
+        self.mysqlclient = None
         if setting.DUPLICATE_SOURCE == 'MYSQL':
             self.mysqlclient = MySQLdb.connect(host=setting.MYSQL_SERVER, port=setting.MYSQL_PORT,
                                                user=setting.MYSQL_USER, passwd=setting.MYSQL_PW,
@@ -19,11 +21,19 @@ class addCrawlJob(threading.Thread):
         self.start()
 
     def addOneMoreJob(self):
-        url = self.redisclient.rpop(setting.REDIS_CRAWLERQUEUE_1)
-        if url != None:
-            self.add_job(self.do_job, url)
-            # print 'addOneMoreJob'
-            # print 'add one Crawl job in '+threading.current_thread()
+        while True:
+            url = self.redisclient.rpop(setting.REDIS_CRAWLERQUEUE_1)
+            if url != None:
+                self.add_job(self.do_job, url)
+                # print 'addOneMoreJob'
+                # print 'add one Crawl job in '+threading.current_thread()
+                break
+            else:
+                if self.redisclient.exists(setting.REDIS_TASKQUEUE) == 1:
+                    continue
+                else:
+                    sys.exit(0)
+
 
     """
         添加一项工作入队
@@ -39,9 +49,15 @@ class addCrawlJob(threading.Thread):
         # print 'Crawl one job '+args[0]
         self.getCollectPage(args[0])
         self.addOneMoreJob()
+        #print '11111111111111111111111111111111 size is '+str(setting.GlobalVar.get_crawlworkqueue().qsize())
 
     def getCollectPage(self, collectPageUrl):
-        CrawlProcessor.CrawlProcessor(collectPageUrl, self.redisclient, self.mysqlclient)
+        try:
+            CrawlProcessor.CrawlProcessor(collectPageUrl, self.redisclient, self.mysqlclient)
+        except Exception,e:
+            print e
+            self.redisclient.rpush(setting.REDIS_CRAWLERQUEUE_1+'_FAIL',collectPageUrl)
+            pass
 
     def run(self):
         while True:

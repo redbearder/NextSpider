@@ -19,68 +19,14 @@
 
         <div class="container">
             <!-- Connection form -->
-
-            <form id="connect" class="form-horizontal">
-                <fieldset>
-                    <legend>SimpleSpider Dashboard</legend>
-
-                    <div class="control-group">
-                        <label class="control-label">
-                            Destination
-                        </label>
-                        <div class="controls">
-                            <input type="text" id="username"
-                                class="input-small"
-                                placeholder="root" />
-                            <div class="input-prepend">
-                                <span class="add-on">@</span><input
-                                    type="text"
-                                    id="hostname"
-                                    class="input-large"
-                                    placeholder="localhost" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="control-group">
-                        <label class="control-label">
-                            Authentication method
-                        </label>
-
-                        <div class="controls">
-                            <label class="radio">
-                                <input type="radio" name="authentication_method"
-                                    value="password" checked />
-                                    Password
-                            </label>
-
-                            <label class="radio">
-                                <input type="radio" name="authentication_method"
-                                    value="private_key" />
-                                    Private Key
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="control-group" id="password_authentication">
-                        <label class="control-label">
-                            Password
-                        </label>
-                        <div class="controls">
-                            <input type="password" id="password"
-                                class="input-large" />
-                        </div>
-                    </div>
-
-
-                    <div class="form-actions">
-                        <button type="submit" class="btn btn-primary">
-                            Connect
-                        </button>
-                    </div>
-
-                </fieldset>
-            </form>
+			
+			<div id="result">
+			crawl work queue size is {{crawl_work_queue_size}}
+            </div>
+            <div id="result">
+			collect work queue size is {{collect_work_queue_size}}
+            </div>
+			
 
             <div id="term">
             </div>

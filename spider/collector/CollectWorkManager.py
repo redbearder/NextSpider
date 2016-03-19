@@ -8,6 +8,7 @@ from addCollectJob import addCollectJob
 class CollectWorkManager(object):
     def __init__(self, thread_num=10):
         self.work_queue = Queue.Queue()
+        setting.GlobalVar.set_collectworkqueue(self.work_queue)
         self.threads = []
         self.threads2 = []
         self.redisclient = redis.Redis(host=setting.REDIS_SERVER, port=setting.REDIS_PORT, password=setting.REDIS_PW,

@@ -4,21 +4,25 @@ from lxml import etree
 from spiderLib import *
 
 def CollectProcessor(collectPageUrl, redisclient, mysqlclient = None):
+        print 'start to Collect Page ' + collectPageUrl
         try:
             html = gethtml(collectPageUrl)
             tree = etree.HTML(html)
-            keywordnodes = tree.xpath("id('ulKeylistCN')/ul/dl/dd/span/li/label/text()")
+            keywordnodes1 = tree.xpath("id('download-image')/div[3]/p[1]/a/text()")
+            keywordnodes2 = tree.xpath("id('read-more')/a/text()")
 
             keywordvar = ''
-            for each in keywordnodes:
+            for each in keywordnodes1:
+                keywordvar += each + ','
+            for each in keywordnodes2:
                 keywordvar += each + ','
 
             #imageid = tree.xpath("id('divPicinfo')/div/table/tbody/tr[6]/td[2]/text()")
-            imageid = tree.xpath("id('divPicinfo')/div/table/tr[6]/td[2]/text()")[0].strip()
-            imgtitle = tree.xpath("id('divPicinfo')/div/table/tr[1]/td[2]/text()")[0]
-            imagetype = tree.xpath("id('divPicinfo')/div/table/tr[8]/td[2]/text()")[0]
+            imageid = tree.xpath("id('wrapper')/div[2]/div/div/div[2]/div/div[1]/div[2]/span/text()")[0].strip()[5:]
+            imgtitle = tree.xpath("id('wrapper')/div[2]/div/div/div[2]/div/div[1]/h1/text()")[0]
+            imagetype = tree.xpath("id('wrapper')/div[2]/div/div/div[2]/div/div[1]/div[3]/span/text()")[0].strip()[5:]
             weburl = collectPageUrl
-            imgurl = tree.xpath("id('form1')/div[2]/div[3]/div[1]/img/@src")[0]
+            imgurl = tree.xpath("id('wrapper')/div[2]/div/div/div[1]/div[1]/img/@src")[0]
             keywordvar = keywordvar
             # print keywordvar
             # yield viewitem
@@ -35,7 +39,7 @@ def CollectProcessor(collectPageUrl, redisclient, mysqlclient = None):
             while (True):
                 try:
                     result = redisclient.lpush(setting.REDIS_RESULTQUEUE_1, image_detail)
-                    print 'Collect one page success push ' + weburl
+                    print 'success to push one page ' + weburl
                     keywordvar = None
                     viewitem = None
                     image_detail = None
@@ -43,9 +47,10 @@ def CollectProcessor(collectPageUrl, redisclient, mysqlclient = None):
                     break
                 except Exception, e:
                     print e
-                    print 'Collect one page fail push ' + weburl + ' and repeat'
+                    print 'fail to push one page ' + weburl + ' and repeat'
                     continue
         except Exception, e:
                     print e
                     result=redisclient.lpush(setting.REDIS_RESULTQUEUE_1+'_FAIL',collectPageUrl)
-                    print 'Collect one page fail push '+collectPageUrl+' and repeat'
+                    print 'fail to Collect one page and record '+collectPageUrl+' and next'
+                    raise e

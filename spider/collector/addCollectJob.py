@@ -1,21 +1,38 @@
 # -*- coding: utf-8 -*-
 import threading
 import setting
+import sys
 from myprocessor import CollectProcessor
+
+if setting.DUPLICATE_SOURCE == 'MYSQL':
+    import MySQLdb
+    import MySQLdb.cursors
 
 class addCollectJob(threading.Thread):
     def __init__(self, work_queue, redisclient):
         threading.Thread.__init__(self)
         self.work_queue = work_queue
         self.redisclient = redisclient
+        self.mysqlclient = None
+        if setting.DUPLICATE_SOURCE == 'MYSQL':
+            self.mysqlclient = MySQLdb.connect(host=setting.MYSQL_SERVER, port=setting.MYSQL_PORT,
+                                               user=setting.MYSQL_USER, passwd=setting.MYSQL_PW,
+                                               charset=setting.MYSQL_CHARSET, db=setting.MYSQL_DB)
         self.start()
 
     def addOneMoreJob(self):
-        url = self.redisclient.rpop(setting.REDIS_COLLECTORQUEUE_1)
-        if url != None:
-            self.add_job(self.do_job, url)
-            # print 'addOneMoreJob'
-            # print threading.current_thread()
+        while True:
+            url = self.redisclient.rpop(setting.REDIS_COLLECTORQUEUE_1)
+            if url != None:
+                self.add_job(self.do_job, url)
+                # print 'addOneMoreJob'
+                # print threading.current_thread()
+                break
+            else:
+                if self.redisclient.exists(setting.REDIS_CRAWLERQUEUE_1) == 1 or self.redisclient.exists(setting.REDIS_TASKQUEUE) == 1:
+                    continue
+                else:
+                    sys.exit(0)
 
     """
         添加一项工作入队
@@ -33,7 +50,12 @@ class addCollectJob(threading.Thread):
         self.addOneMoreJob()
 
     def getResult(self, collectPageUrl):
-        CollectProcessor.CollectProcessor(collectPageUrl, self.redisclient)
+        try:
+            CollectProcessor.CollectProcessor(collectPageUrl, self.redisclient, self.mysqlclient)
+        except Exception,e:
+            print e
+            #self.redisclient.rpush(setting.REDIS_COLLECTORQUEUE_1+'_FAIL'.collectPageUrl)
+            pass
 
     def run(self):
         while True:

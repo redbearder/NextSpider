@@ -22,10 +22,10 @@ def TaskStarter():
             raise e
 
         tree = etree.HTML(html)
-        nodes = tree.xpath('//a[contains(@href,"/1.html")]/@href')
+        nodes = tree.xpath('id("wrapper")/div[2]/div[2]/div/ul/li/a/@href')
 
         for node in nodes:
-            if 'www.quanjing.com' in node:
+            if 'www.123rf.com.cn' in node:
                 client.lpush(setting.REDIS_TASKQUEUE, node)
 
     while True:
@@ -39,18 +39,21 @@ def TaskStarter():
         nodehtml = ''
         try:
             nodehtml = gethtml(taskurl)
-            level1tree = etree.HTML(nodehtml)
-            #level1nodes = level1tree.xpath("id('htmlPageInfoTop')/x:/a[2]/@href")
-            level1nodes = level1tree.xpath("id('htmlPageInfoTop')/a[2]/@href")
         except Exception, e:
             print e
             continue
 
+        #get cate page number
+        level1catetree = etree.HTML(nodehtml)
+        level1catenodes = level1catetree.xpath("id('wrapper')/div[2]/div[3]/div[1]/div/div[2]/div[1]/text()")
         CODEC = 'UTF-8'
-        pageallnum = level1nodes[0][0:-5].split('/')[3]
         # print pageallnum
+        pageallnum = level1catenodes[3].strip()[1:]
+
+        #produce each page url by task url
+        #last slash '/' position index
         idx = taskurl[::-1].index('/')
-        cateurl = taskurl[:-int(idx)]
+        catekeyword = taskurl[-int(idx):-5]
         current = client.get(setting.REDIS_TASK_CURRENT)
         if current == None:
             current = 1
@@ -60,8 +63,8 @@ def TaskStarter():
         for i in range(int(current), int(pageallnum) + 1):
             if i % setting.REDIS_TASKQUEUE_SAVEFREQUENCY == 0:
                 client.set(setting.REDIS_TASK_CURRENT, i)
-
-            ret = cateurl + str(i) + ".html"
+            ret = 'http://www.123rf.com.cn/search.php?keyword='+catekeyword+'&media_type=0&page='+str(i)
+            #ret = cateurl + str(i) + ".html"
             # print ret
             client.lpush(setting.REDIS_CRAWLERQUEUE_1, ret)
             if i == int(pageallnum):
