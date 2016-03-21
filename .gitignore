@@ -50,3 +50,5 @@ Temporary Items
 /redisbin_x32/*.rdb
 /.idea
 /*.pyc
+/*.pyc
+/.idea

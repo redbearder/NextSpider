@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import setting
 from lxml import etree
+import requests
 from spiderLib import *
 
 def CollectProcessor(collectPageUrl, redisclient, mysqlclient = None):
@@ -49,6 +50,11 @@ def CollectProcessor(collectPageUrl, redisclient, mysqlclient = None):
                     print e
                     print 'fail to push one page ' + weburl + ' and repeat'
                     continue
+        except requests.exceptions.Timeout as e:
+                    print e
+                    result=redisclient.lpush(setting.REDIS_RESULTQUEUE_1+'_TIMEOUT',collectPageUrl)
+                    print 'Timeout fail to Collect one page and record '+collectPageUrl+' and next'
+                    raise e
         except Exception, e:
                     print e
                     result=redisclient.lpush(setting.REDIS_RESULTQUEUE_1+'_FAIL',collectPageUrl)
