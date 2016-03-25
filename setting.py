@@ -18,12 +18,12 @@ MYSQL_CHARSET='utf8'
 MYSQL_DB='iso100'
 
 DUPLICATE_SOURCE='REDIS' #REDIS or MYSQL
-DUPLICATE_FIELD='imageurl123rf'
+DUPLICATE_FIELD='imageurlgettyimagescouk'
 
 RESPONSE_ENCODING='UTF-8'
 
-CRAWLER_NUM=3
-COLLECTOR_NUM=6
+CRAWLER_NUM=1
+COLLECTOR_NUM=1
 
 SLAVE_CRAWLER_NUM=15
 SLAVE_COLLECTOR_NUM=40
@@ -56,7 +56,7 @@ REDIS_DOWNLOADQUEUE_1='REDIS_DOWNLOADQUEUE_1'
 REDIS_DOWNLOADQUEUE_2='REDIS_DOWNLOADQUEUE_2'
 
 #start_urls=('http://url1','http://url1')
-start_urls='http://www.123rf.com.cn/%E5%85%8D%E7%89%88%E7%A8%8E%E5%9B%BE%E7%89%87/'
+start_urls='http://www.gettyimages.co.uk/search/2/image?excludenudity=true&family=creative&license=rf&page=1&sort=best'
 
 REQUEST_HEADER = {
                 "Accept": "*/*",
@@ -65,7 +65,7 @@ REQUEST_HEADER = {
                 "Connection": "keep-alive",
                 "Content-Type": " application/x-www-form-urlencoded; charset=UTF-8",
                 "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.111 Safari/537.36",
-                "Referer": "http://www.gettyimages.cn/newsr.php?searchkey=8227&local=true"
+                "Referer": "http://www.gettyimages.co.uk/search/2/image?excludenudity=true&family=creative&license=rf&page=1&sort=best"
             }
 
 

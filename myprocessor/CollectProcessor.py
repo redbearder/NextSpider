@@ -9,21 +9,18 @@ def CollectProcessor(collectPageUrl, redisclient, mysqlclient = None):
         try:
             html = gethtml(collectPageUrl)
             tree = etree.HTML(html)
-            keywordnodes1 = tree.xpath("id('download-image')/div[3]/p[1]/a/text()")
-            keywordnodes2 = tree.xpath("id('read-more')/a/text()")
+            keywordnodes1 = tree.xpath("/html/body/div[2]/section/div/div[1]/section[3]/ul/li/a/text()")
 
             keywordvar = ''
             for each in keywordnodes1:
                 keywordvar += each + ','
-            for each in keywordnodes2:
-                keywordvar += each + ','
 
             #imageid = tree.xpath("id('divPicinfo')/div/table/tbody/tr[6]/td[2]/text()")
-            imageid = tree.xpath("id('wrapper')/div[2]/div/div/div[2]/div/div[1]/div[2]/span/text()")[0].strip()[5:]
-            imgtitle = tree.xpath("id('wrapper')/div[2]/div/div/div[2]/div/div[1]/h1/text()")[0]
-            imagetype = tree.xpath("id('wrapper')/div[2]/div/div/div[2]/div/div[1]/div[3]/span/text()")[0].strip()[5:]
+            imageid = tree.xpath("/html/body/div[2]/section/div/main/section[2]/dl/dd[3]/text()")[0]
+            imgtitle = tree.xpath("/html/body/div[2]/section/div/main/section[2]/div[1]/h1/text()")[0]
+            imagetype = tree.xpath("/html/body/div[2]/section/div/main/section[2]/dl/dd[2]/a/text()")[0]
             weburl = collectPageUrl
-            imgurl = tree.xpath("id('wrapper')/div[2]/div/div/div[1]/div[1]/img/@src")[0]
+            imgurl = tree.xpath("/html/body/div[2]/section/div/main/section[1]/div[1]/img/@src")[0]
             keywordvar = keywordvar
             # print keywordvar
             # yield viewitem

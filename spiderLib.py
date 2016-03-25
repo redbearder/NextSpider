@@ -68,3 +68,45 @@ def gethtml(url):
         except Exception, e:
             print e
             raise e
+
+def pushCollectorQueue(uniqueValue, redisClient, mysqlClient=None, duplicateFilter=False):
+    if duplicateFilter == True:
+        if setting.DUPLICATE_SOURCE == 'MYSQL':
+            while True:
+                try:
+                    cursor = mysqlClient.cursor()
+                    sql = "insert into " + setting.DUPLICATE_FIELD + "(`" + setting.DUPLICATE_FIELD + "`) values ('" + uniqueValue + "')"
+                    cursor.execute(sql)
+                    cursor.close()
+                    result = mysqlClient.lpush(setting.REDIS_COLLECTORQUEUE_1, uniqueValue)
+                    print 'Crawl one collector page and success push ' + uniqueValue
+                    break
+                except Exception, e:
+                    print e
+                    print 'Crawl one collector page and fail push ' + uniqueValue + ' and break'
+                    break
+        else:
+            while (True):
+                try:
+                    saddreturn = redisClient.sadd(setting.DUPLICATE_FIELD, uniqueValue)
+                    if saddreturn == 1:
+                        result = redisClient.lpush(setting.REDIS_COLLECTORQUEUE_1, uniqueValue)
+                        print 'Crawl one collector page and success push ' + uniqueValue
+                    else:
+                        print 'Crawl one collector page and fail push ' + uniqueValue + ' and break'
+                    break
+                except Exception, e:
+                    print e
+                    print 'Crawl one collector page and fail push ' + uniqueValue + ' and repeat'
+                    continue
+
+    else:
+        while (True):
+            try:
+                result = redisClient.lpush(setting.REDIS_COLLECTORQUEUE_1, uniqueValue)
+                print 'Crawl one collector page and success push ' + uniqueValue
+                break
+            except Exception, e:
+                print e
+                print 'Crawl one collector page and fail push ' + uniqueValue + ' and repeat'
+                continue
