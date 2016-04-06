@@ -51,12 +51,12 @@ class addCrawlJob(threading.Thread):
         self.addOneMoreJob()
         #print '11111111111111111111111111111111 size is '+str(setting.GlobalVar.get_crawlworkqueue().qsize())
 
-    def getCollectPage(self, collectPageUrl):
+    def getCollectPage(self, crawlPageUrl):
         try:
-            CrawlProcessor.CrawlProcessor(collectPageUrl, self.redisclient, self.mysqlclient)
+            CrawlProcessor.CrawlProcessor(crawlPageUrl, self.redisclient, self.mysqlclient)
         except Exception,e:
             print e
-            self.redisclient.rpush(setting.REDIS_CRAWLERQUEUE_1+'_FAIL',collectPageUrl)
+            self.redisclient.rpush(setting.REDIS_CRAWLERQUEUE_1+'_FAIL',crawlPageUrl)
             pass
 
     def run(self):

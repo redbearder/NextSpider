@@ -56,7 +56,7 @@ REDIS_DOWNLOADQUEUE_1='REDIS_DOWNLOADQUEUE_1'
 REDIS_DOWNLOADQUEUE_2='REDIS_DOWNLOADQUEUE_2'
 
 #start_urls=('http://url1','http://url1')
-start_urls='http://www.gettyimages.co.uk/search/2/image?excludenudity=true&family=creative&license=rf&page=1&sort=best'
+start_urls='http://www.superimagemarket.com/WebServices/CategoryManage.asmx/GetAllRecommList'
 
 REQUEST_HEADER = {
                 "Accept": "*/*",
@@ -65,7 +65,7 @@ REQUEST_HEADER = {
                 "Connection": "keep-alive",
                 "Content-Type": " application/x-www-form-urlencoded; charset=UTF-8",
                 "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.111 Safari/537.36",
-                "Referer": "http://www.gettyimages.co.uk/search/2/image?excludenudity=true&family=creative&license=rf&page=1&sort=best"
+                "Referer": "http://www.superimagemarket.com/"
             }
 
 
