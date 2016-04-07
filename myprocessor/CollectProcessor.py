@@ -55,6 +55,12 @@ def CollectProcessor(collectPageUrl, redisclient, mysqlclient = None):
                     viewitem = None
                     image_detail = None
                     # return item
+                    if setting.DOWNLOADER_NUM != 0:
+                        downloaddata = {}
+                        downloaddata['imgurl']=imgurl
+                        downloaddata['imageid']=imageid
+                        result = redisclient.lpush(setting.REDIS_DOWNLOADQUEUE_1, json.dumps(downloaddata))
+                        pass
                     break
                 except Exception, e:
                     print e

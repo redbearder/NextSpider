@@ -11,6 +11,7 @@ import threading
 from myprocessor.TaskStarter import TaskStarter
 from spider.collector.CollectWorkManager import CollectWorkManager
 from spider.crawler.CrawlWorkManager import CrawlWorkManager
+from spider.downloader.DownloadWorkManager import DownloadWorkManager
 
 if setting.DUPLICATE_SOURCE == 'MYSQL':
     import MySQLdb
@@ -58,6 +59,7 @@ if __name__ == "__main__":
 
     work_manager = CrawlWorkManager(setting.CRAWLER_NUM)
     collect_work_manager = CollectWorkManager(setting.COLLECTOR_NUM)
+    download_work_manager = DownloadWorkManager(setting.DOWNLOADER_NUM)
 
     taskMgr = TaskWorkManager()
     httpPanel()

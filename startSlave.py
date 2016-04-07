@@ -3,6 +3,7 @@
 import setting
 from spider.collector.CollectWorkManager import CollectWorkManager
 from spider.crawler.CrawlWorkManager import CrawlWorkManager
+from spider.downloader.DownloadWorkManager import DownloadWorkManager
 try:
     import cPickle as pickle
 except ImportError:
@@ -18,6 +19,7 @@ if __name__=="__main__":
         setting.GlobalVar.set_proxylist(redisproxylist)
     work_manager =  CrawlWorkManager(setting.SLAVE_CRAWLER_NUM)
     collect_work_manager =  CollectWorkManager(setting.SLAVE_COLLECTOR_NUM)
+    download_work_manager = DownloadWorkManager(setting.SLAVE_DOWNLOADER_NUM)
 
     while True:
         time.sleep(10)

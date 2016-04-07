@@ -30,11 +30,11 @@ class addDownloadJob(threading.Thread):
         self.doDownload(args[0])
         self.addOneMoreJob()
 
-    def doDownload(self, downloadUrl):
-        print 'start to download  ' + downloadUrl
+    def doDownload(self, download):
+        print 'start to download  ' + download
         try:
             #Download Code
-            DownloadProcessor(downloadUrl)
+            DownloadProcessor.DownloadProcessor(download)
             pass
         except Exception, e:
             return

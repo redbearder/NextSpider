@@ -2,8 +2,8 @@
 import Queue
 import redis
 import setting
-import DownloadWork
-import addDownloadJob
+from DownloadWork import DownloadWork
+from addDownloadJob import addDownloadJob
 
 class DownloadWorkManager(object):
     def __init__(self, thread_num=10):
