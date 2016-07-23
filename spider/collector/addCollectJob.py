@@ -3,10 +3,13 @@ import threading
 import setting
 import sys
 from myprocessor import CollectProcessor
+import logging
 
 if setting.DUPLICATE_SOURCE == 'MYSQL':
     import MySQLdb
     import MySQLdb.cursors
+
+log = logging.getLogger(__name__)
 
 class addCollectJob(threading.Thread):
     def __init__(self, work_queue, redisclient):
@@ -54,6 +57,7 @@ class addCollectJob(threading.Thread):
             CollectProcessor.CollectProcessor(collectPageUrl, self.redisclient, self.mysqlclient)
         except Exception,e:
             print e
+            log.warning(e)
             #self.redisclient.rpush(setting.REDIS_COLLECTORQUEUE_1+'_FAIL'.collectPageUrl)
             pass
 

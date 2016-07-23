@@ -12,6 +12,10 @@ from myprocessor.TaskStarter import TaskStarter
 from spider.collector.CollectWorkManager import CollectWorkManager
 from spider.crawler.CrawlWorkManager import CrawlWorkManager
 from spider.downloader.DownloadWorkManager import DownloadWorkManager
+import logging
+from logging.handlers import TimedRotatingFileHandler
+import datetime
+from datetime import *
 
 if setting.DUPLICATE_SOURCE == 'MYSQL':
     import MySQLdb
@@ -38,6 +42,21 @@ class TaskWork(threading.Thread):
         taskCreator()
 
 if __name__ == "__main__":
+    loggerName = ''
+    BASIC_LOG_PATH = './'
+    filename = 'Spider_'+setting.DUPLICATE_FIELD+'.log'
+    log = logging.getLogger(loggerName)
+    formatter = logging.Formatter('%(asctime)s level-%(levelname)-8s thread-%(thread)-8d %(message)s')
+    fileTimeHandler = TimedRotatingFileHandler(BASIC_LOG_PATH + filename, when="midnight", backupCount=30)
+
+    fileTimeHandler.suffix = "%Y%m%d"
+    fileTimeHandler.setFormatter(formatter)
+    logging.basicConfig(level = logging.warning)
+    fileTimeHandler.setFormatter(formatter)
+    log.addHandler(fileTimeHandler)
+
+    log.info('start Master Spider at '+datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+
     client = redis.Redis(host=setting.REDIS_SERVER, port=setting.REDIS_PORT, password=setting.REDIS_PW, db=0)
     redisproxylist = client.get("PROXYLIST")
     if redisproxylist != None:

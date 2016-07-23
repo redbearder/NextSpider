@@ -3,8 +3,12 @@ import setting
 from lxml import etree
 from spiderLib import *
 import json
+import logging
+
+log = logging.getLogger(__name__)
 
 def CrawlProcessor(crawlPageUrl, redisclient, mysqlclient = None):
+        log.info('start to Crawl Page ' + crawlPageUrl)
         print 'start to Crawl Page ' + crawlPageUrl
         try:
             url =  'http://www.superimagemarket.com/WebServices/KeyWordsImage.asmx/GetImagesByKeyWords'
@@ -13,11 +17,14 @@ def CrawlProcessor(crawlPageUrl, redisclient, mysqlclient = None):
             jsondata = json.loads(html)
         except requests.exceptions.Timeout as e:
             print e
+            log.warning(e)
+            log.warning('Timeout fail to Crawl one collector page and record '+crawlPageUrl+' and next')
             result=redisclient.lpush(setting.REDIS_COLLECTORQUEUE_1+'_TIMEOUT',crawlPageUrl)
             print 'Timeout fail to Crawl one collector page and record '+crawlPageUrl+' and next'
             raise e
         except Exception, e:
             print e
+            log.warning(e)
             raise e
         last = ''
         dictarr = json.loads(jsondata['data'])

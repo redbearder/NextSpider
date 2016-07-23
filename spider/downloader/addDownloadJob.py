@@ -2,6 +2,9 @@
 import threading
 import setting
 from myprocessor import DownloadProcessor
+import logging
+
+log = logging.getLogger(__name__)
 
 class addDownloadJob(threading.Thread):
     def __init__(self, work_queue, redisclient):
@@ -31,6 +34,7 @@ class addDownloadJob(threading.Thread):
         self.addOneMoreJob()
 
     def doDownload(self, download):
+        log.info('start to download  ' + download)
         print 'start to download  ' + download
         try:
             #Download Code

@@ -9,18 +9,23 @@ import urlparse
 import base64
 import urllib
 import json
+import logging
+
+log = logging.getLogger(__name__)
 
 def TaskStarter():
     client = redis.Redis(host=setting.REDIS_SERVER, port=setting.REDIS_PORT, password=setting.REDIS_PW, db=0)
     taskurl = client.lpop(setting.REDIS_TASKQUEUE)
 
     if taskurl == None:
+        log.info(setting.start_urls)
         print setting.start_urls
         # start Redis
         try:
             html = posthtml(setting.start_urls,{"top":30})
         except Exception, e:
             print e
+            log.warning(e)
             raise e
 
         jsondata = json.loads(html)
@@ -32,7 +37,7 @@ def TaskStarter():
         if taskurl == None:
             break
         client.lpush(setting.REDIS_TASKQUEUE, taskurl)
-
+        log.info('start to push Crawler Category queue ' + taskurl)
         print 'start to push Crawler Category queue ' + taskurl
 
         nodehtml = ''
@@ -55,6 +60,7 @@ def TaskStarter():
             jsondata = posthtml(url,data)
         except Exception, e:
             print e
+            log.warning(e)
             continue
         #get cate page number
 

@@ -3,10 +3,13 @@ import threading
 import setting
 from myprocessor import CrawlProcessor
 import sys
+import logging
 
 if setting.DUPLICATE_SOURCE == 'MYSQL':
     import MySQLdb
     import MySQLdb.cursors
+
+log = logging.getLogger(__name__)
 
 class addCrawlJob(threading.Thread):
     def __init__(self, work_queue, redisclient):
@@ -56,6 +59,7 @@ class addCrawlJob(threading.Thread):
             CrawlProcessor.CrawlProcessor(crawlPageUrl, self.redisclient, self.mysqlclient)
         except Exception,e:
             print e
+            log.warning(e)
             self.redisclient.rpush(setting.REDIS_CRAWLERQUEUE_1+'_FAIL',crawlPageUrl)
             pass
 

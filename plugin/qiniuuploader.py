@@ -2,6 +2,9 @@
 
 from qiniu import Auth, put_file, etag, urlsafe_base64_encode
 import qiniu.config
+import logging
+
+log = logging.getLogger(__name__)
 
 #需要填写你的 Access Key 和 Secret Key
 access_key = 'access_key'
@@ -24,6 +27,7 @@ def qiniuUploader(localfile, filename):
 
     ret, info = put_file(token, key, localfile)
     print(info)
+    log.info(info)
     assert ret['key'] == key
     assert ret['hash'] == etag(localfile)
     pass

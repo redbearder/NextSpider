@@ -5,6 +5,9 @@ import requests
 from spiderLib import *
 import json
 import urlparse
+import logging
+
+log = logging.getLogger(__name__)
 
 # parse html with Dynamic js data
 '''
@@ -14,6 +17,7 @@ from PyQt4.QtWebKit import *
 '''
 
 def CollectProcessor(collectPageUrl, redisclient, mysqlclient = None):
+        log.info('start to Collect Page ' + collectPageUrl)
         print 'start to Collect Page ' + collectPageUrl
         try:
             html = gethtml(collectPageUrl)
@@ -50,6 +54,7 @@ def CollectProcessor(collectPageUrl, redisclient, mysqlclient = None):
             while (True):
                 try:
                     result = redisclient.lpush(setting.REDIS_RESULTQUEUE_1, jsondata)
+                    log.info('success to push one page ' + weburl)
                     print 'success to push one page ' + weburl
                     keywordvar = None
                     viewitem = None
@@ -64,15 +69,21 @@ def CollectProcessor(collectPageUrl, redisclient, mysqlclient = None):
                     break
                 except Exception, e:
                     print e
+                    log.warning(e)
+                    log.warning('fail to push one page ' + weburl + ' and repeat')
                     print 'fail to push one page ' + weburl + ' and repeat'
                     continue
         except requests.exceptions.Timeout as e:
                     print e
+                    log.warning(e)
+                    log.warning('Timeout fail to Collect one page and record '+collectPageUrl+' and next')
                     result=redisclient.lpush(setting.REDIS_RESULTQUEUE_1+'_TIMEOUT',collectPageUrl)
                     print 'Timeout fail to Collect one page and record '+collectPageUrl+' and next'
                     raise e
         except Exception, e:
                     print e
+                    log.warning(e)
+                    log.warning('fail to Collect one page and record '+collectPageUrl+' and next')
                     result=redisclient.lpush(setting.REDIS_RESULTQUEUE_1+'_FAIL',collectPageUrl)
                     print 'fail to Collect one page and record '+collectPageUrl+' and next'
                     raise e
