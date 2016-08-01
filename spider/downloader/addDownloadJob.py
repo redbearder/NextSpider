@@ -14,9 +14,16 @@ class addDownloadJob(threading.Thread):
         self.start()
 
     def addOneMoreJob(self):
-        url = self.redisclient.rpop(setting.REDIS_DOWNLOADQUEUE_1)
-        if url != None:
-            self.add_job(self.do_job, url)
+        while True:
+            url = self.redisclient.rpop(setting.REDIS_DOWNLOADQUEUE_1)
+            if url != None:
+                self.add_job(self.do_job, url)
+                break
+            else:
+                if self.redisclient.exists(setting.REDIS_COLLECTORQUEUE_1) == 1 or self.redisclient.exists(setting.REDIS_DOWNLOADQUEUE_1) == 1 or self.redisclient.exists(setting.REDIS_CRAWLERQUEUE_1) == 1 or self.redisclient.exists(setting.REDIS_TASKQUEUE) == 1:
+                    continue
+                else:
+                    sys.exit(0)
 
     """
         添加一项工作入队
@@ -41,7 +48,10 @@ class addDownloadJob(threading.Thread):
             DownloadProcessor.DownloadProcessor(download)
             pass
         except Exception, e:
-            return
+            print e
+            log.warning(e)
+            self.redisclient.rpush(setting.REDIS_DOWNLOADQUEUE_1+'_FAIL',download)
+            # return
 
     def run(self):
         while True:
