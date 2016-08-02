@@ -16,8 +16,9 @@ log = logging.getLogger(__name__)
 def TaskStarter():
     client = redis.Redis(host=setting.REDIS_SERVER, port=setting.REDIS_PORT, password=setting.REDIS_PW, db=0)
     taskurl = client.lpop(setting.REDIS_TASKQUEUE)
+    current = client.get(setting.REDIS_TASK_CURRENT)
 
-    if taskurl == None:
+    if taskurl == None and current == None:
         log.info(setting.start_urls)
         print setting.start_urls
         # start Redis
