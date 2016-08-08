@@ -81,4 +81,6 @@ if __name__ == "__main__":
     download_work_manager = DownloadWorkManager(setting.DOWNLOADER_NUM)
 
     taskMgr = TaskWorkManager()
-    httpPanel()
+
+    if setting.WEB_PANEL:
+        httpPanel()

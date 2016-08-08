@@ -5,11 +5,19 @@ class CrawlWork(threading.Thread):
     def __init__(self, work_queue):
         threading.Thread.__init__(self)
         self.work_queue = work_queue
+        #self.daemon = True
         self.start()
 
     def run(self):
         # 死循环，从而让创建的线程在一定条件下关闭退出
         while True:
+            # if self.work_queue.empty():
+            #     continue
+            # do = ''
+            # args = ''
+            # do, args = self.work_queue.get(block=False)  # 任务异步出队，Queue内部实现了同步机制
+            # do(args)
+            # self.work_queue.task_done()  # 通知系统任务完成
             do = ''
             args = ''
             try:

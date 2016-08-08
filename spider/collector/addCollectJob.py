@@ -33,6 +33,7 @@ class addCollectJob(threading.Thread):
                 break
             else:
                 if self.redisclient.exists(setting.REDIS_COLLECTORQUEUE_1) == 1 or self.redisclient.exists(setting.REDIS_DOWNLOADQUEUE_1) == 1 or self.redisclient.exists(setting.REDIS_CRAWLERQUEUE_1) == 1 or self.redisclient.exists(setting.REDIS_TASKQUEUE) == 1:
+                #if self.redisclient.exists(setting.REDIS_COLLECTORQUEUE_1) == 1 or self.redisclient.exists(setting.REDIS_CRAWLERQUEUE_1) == 1 or self.redisclient.exists(setting.REDIS_TASKQUEUE) == 1:
                     continue
                 else:
                     sys.exit(0)

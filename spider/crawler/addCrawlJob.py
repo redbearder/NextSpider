@@ -21,6 +21,7 @@ class addCrawlJob(threading.Thread):
             self.mysqlclient = MySQLdb.connect(host=setting.MYSQL_SERVER, port=setting.MYSQL_PORT,
                                                user=setting.MYSQL_USER, passwd=setting.MYSQL_PW,
                                                charset=setting.MYSQL_CHARSET, db=setting.MYSQL_DB)
+        #self.daemon = True
         self.start()
 
     def addOneMoreJob(self):

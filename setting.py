@@ -2,6 +2,7 @@
 import globalVar as GlobalVar
 
 #web
+WEB_PANEL = True
 WEB_PORT = 3333
 
 #REDIS
@@ -67,5 +68,3 @@ REQUEST_HEADER = {
                 "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.111 Safari/537.36",
                 "Referer": "http://www.superimagemarket.com/"
             }
-
-
