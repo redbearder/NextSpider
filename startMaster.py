@@ -51,7 +51,7 @@ if __name__ == "__main__":
 
     fileTimeHandler.suffix = "%Y%m%d"
     fileTimeHandler.setFormatter(formatter)
-    logging.basicConfig(level = logging.warning)
+    logging.basicConfig(level = logging.WARNING)
     fileTimeHandler.setFormatter(formatter)
     log.addHandler(fileTimeHandler)
 
