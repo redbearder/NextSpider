@@ -53,3 +53,6 @@ Temporary Items
 /*.pyc
 /.idea
 /.idea
+*.pyc
+setting.pyc
+*.log

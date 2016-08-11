@@ -1,5 +1,5 @@
 @echo off
 rem cmd
-rem echo 当前目录是：%cd%
-cmd /k python startSlave.py
+rem echo Current dir is : %~dp0
+cmd /k python %~dp0\startSlave.py
 pause
